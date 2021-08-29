@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t lewavesi/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true lewavesi/react-test npm test
+
+after_success:
+  - docker build -t lewavesi/multi-client ./client
+  - docker build -t lewavesi/multi-nginx ./nginx
+  - docker build -t lewavesi/multi-server ./server
+  - docker build -t lewavesi/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push lewavesi/multi-client
+  - docker push lewavesi/multi-nginx
+  - docker push lewavesi/multi-server
+  - docker push lewavesi/multi-worker
+
