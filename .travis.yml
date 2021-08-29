@@ -18,4 +18,3 @@ after_success:
   - docker push lewavesi/multi-nginx
   - docker push lewavesi/multi-server
   - docker push lewavesi/multi-worker
-
