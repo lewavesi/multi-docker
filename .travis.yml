@@ -13,7 +13,9 @@ after_success:
   - docker build -t lewavesi/multi-nginx ./nginx
   - docker build -t lewavesi/multi-server ./server
   - docker build -t lewavesi/multi-worker ./worker
+  # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to Docker Hub
   - docker push lewavesi/multi-client
   - docker push lewavesi/multi-nginx
   - docker push lewavesi/multi-server
